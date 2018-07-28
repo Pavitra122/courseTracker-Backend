@@ -19,8 +19,8 @@ application  = Flask(__name__)
 #sheet.delete_row(index)
 #sheet.insert_row(row, index)
 
-
-
+trackedClasses= []
+sheet = 0 
 
 
 @application.route('/')
