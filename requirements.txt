@@ -2,3 +2,4 @@ gunicorn
 Flask
 gspread
 oauth2client
+bs4
