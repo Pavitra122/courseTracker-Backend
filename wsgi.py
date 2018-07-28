@@ -10,7 +10,7 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import threading
 
-app = Flask(__name__)
+application  = Flask(__name__)
 
 
 #sheet.update_cell(1, 1, "My name is pavitra")
@@ -23,7 +23,7 @@ app = Flask(__name__)
 
 
 
-@app.route('/')
+@application.route('/')
 def hello_world():
     return '<h1>Course Tracker</h1><p>A prototype API</p>'
 
@@ -32,7 +32,7 @@ def hello_world():
 
 
 
-@app.route('/v1/', methods=['GET'])
+@application.route('/v1/', methods=['GET'])
 def resources():
     return jsonify(['resources'])
 
@@ -42,7 +42,7 @@ def resources():
 #http://localhost:5000/v1/course_track/add?department=ECE&courseNumber=120&CRN=65253
 #http://localhost:5000/v1/course_track/add?department=ECE&courseNumber=120&CRN=64598
 
-@app.route('/v1/course_track/add', methods=['GET'])
+@application.route('/v1/course_track/add', methods=['GET'])
 def add():
     try:
         if 'courseNumber' in request.args:
@@ -81,7 +81,7 @@ def add():
 #http://localhost:5000/v1/course_track/delete?department=ECE&courseNumber=120&CRN=65253
 #http://localhost:5000/v1/course_track/delete?department=ECE&courseNumber=120&CRN=64598
 
-@app.route('/v1/course_track/delete', methods=['GET'])
+@application.route('/v1/course_track/delete', methods=['GET'])
 def remove():
     if 'courseNumber' in request.args:
         courseNumber = int(request.args['courseNumber'])
@@ -109,7 +109,7 @@ def remove():
 
 
 
-@app.route('/v1/course_track/returnClassStatus', methods=['GET'])
+@application.route('/v1/course_track/returnClassStatus', methods=['GET'])
 def status():
 	try:
 		if 'courseNumber' in request.args:
@@ -136,7 +136,7 @@ def updateLoop():
 
 
 
-@app.route('/v1/course_track/return_list', methods = ['GET'])
+@application.route('/v1/course_track/return_list', methods = ['GET'])
 def returnArray():
 	try:
 		return jsonify(trackedClasses)
@@ -157,7 +157,7 @@ if __name__ == "__main__":
 
     t1 = threading.Thread(target=updateLoop, args=())
     t1.start()
-    app.run()
+    application.run()
     t1.join()
 
 
