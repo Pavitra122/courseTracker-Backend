@@ -68,7 +68,7 @@ def add():
         else:
            return 'Course Not found'
     except Exception as e:
-        print e
+        print (e)
         exc_type, exc_obj, exc_tb = sys.exc_info()
         tb = traceback.extract_tb(exc_tb)[-1]
         print(exc_type, tb[2], tb[1])
@@ -118,14 +118,14 @@ def status():
 			department = request.args['department']
 		if 'CRN' in request.args:
 			CRN = int(request.args['CRN'])
-		print department,courseNumber,CRN
+		print (department,courseNumber,CRN)
 		return tracker.returnClassStatus(department,courseNumber,CRN)
 	except Exception as e :print(e)
 
 
 def updateLoop():
     while 1:
-        print 'Updating'
+        print ('Updating')
         time.sleep(5)
         for i in range(len(trackedClasses)):
             trackedClasses[i]['status'] = tracker.returnClassStatus(trackedClasses[i]['department'],trackedClasses[i]['courseNumber'], trackedClasses[i]['CRN'])
@@ -151,7 +151,7 @@ if __name__ == "__main__":
 
     creds = ServiceAccountCredentials.from_json_keyfile_name('Project-f939c591cfa1.json', scope)
     client = gspread.authorize(creds)
-    print "a"
+    print ("Initializing")
     sheet = client.open("courses").sheet1
     trackedClasses = sheet.get_all_records()
 
