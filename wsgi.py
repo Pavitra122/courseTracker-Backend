@@ -26,6 +26,8 @@ creds = ServiceAccountCredentials.from_json_keyfile_name('Project-f939c591cfa1.j
 client = gspread.authorize(creds)
 print ("Initializing")
 sheet = client.open("courses").sheet1
+t1 = threading.Thread(target=updateLoop, args=())
+t1.start()
 
 @application.route('/')
 def hello_world():
@@ -172,8 +174,8 @@ if __name__ == "__main__":
 
     trackedClasses = sheet.get_all_records()
 
-    t1 = threading.Thread(target=updateLoop, args=())
-    t1.start()
+
+
     application.run()
     t1.join()
 
