@@ -151,7 +151,7 @@ def updateLoop():
 @application.route('/v1/course_track/return_list', methods = ['GET'])
 def returnArray():
     try:
-		return jsonify(trackedClasses)
+        return jsonify(trackedClasses)
     except Exception as e :
         print(e)
         print('Error on line {}'.format(sys.exc_info()[-1].tb_lineno), type(e).__name__, e)
