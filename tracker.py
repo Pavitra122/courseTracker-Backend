@@ -50,7 +50,7 @@ def returnDepartmentList():
 
 	print departments
 
-returnDepartmentList()
+#returnDepartmentList()
 
 
 
