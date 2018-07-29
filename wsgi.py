@@ -46,7 +46,7 @@ def resources():
 def add():
     #try:
         print (request.args)
-        print (json.loads(request.content.decode('utf-8')))
+        #print (json.loads(request.content.decode('utf-8')))
 
         if 'courseNumber' in request.args:
             courseNumber = int(request.args['courseNumber'])
@@ -61,15 +61,15 @@ def add():
                 #sheet.delete_row(i+2)
                 sheet.update_cell(i+2,4,trackedClasses[i]['users'] )
                 #sheet.insert_row([ trackedClasses[i]['department'], trackedClasses[i]['courseNumber'],trackedClasses[i]['CRN'],trackedClasses[i]['users'],trackedClasses[i]['status'] ], i+2)
-                return jsonify('Increased number of users, new number = ' + str(trackedClasses[i]['users']))
+                return jsonify({ 'message' : 'Increased number of users, new number = ' + str(trackedClasses[i]['users'])})
 
 
         if tracker.returnClassStatus(department,courseNumber,CRN) != 'Course Not found' :
             trackedClasses.append({'department':department, 'courseNumber':courseNumber, 'CRN':CRN  , 'users':1, 'status':tracker.returnClassStatus(department,courseNumber,CRN)})
             sheet.append_row([department, courseNumber, CRN  , 1, tracker.returnClassStatus(department,courseNumber,CRN)])
-            return jsonify('Added new course')
+            return jsonify({'message' : 'Added new course'})
         else:
-           return jsonify('Course Not found')
+           return jsonify({'message' : 'Course Not found'})
 
 
 
