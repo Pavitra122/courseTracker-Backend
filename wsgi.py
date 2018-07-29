@@ -93,6 +93,7 @@ def add():
 @application.route('/v1/course_track/delete', methods=['GET'])
 def remove():
 	try:
+		trackedClasses = sheet.get_all_records()
 	    if 'courseNumber' in request.args:
 	        courseNumber = int(request.args['courseNumber'])
 	    if 'department' in request.args:
@@ -106,10 +107,10 @@ def remove():
 	            if trackedClasses[i]['users'] == 0:
 	                del trackedClasses[i]
 	                sheet.delete_row(i+2)
-	                return 'Not tracking class anymore'
+	                return jsonify({ 'message' : 'Not tracking class anymore'})
 	            sheet.update_cell(i+2,4,trackedClasses[i]['users'] )
-	            return 'Decreased number of users, new number = ' +  str(trackedClasses[i]['users'])
-	    return 'Some error occured'
+	            return jsonify({'message' :  'Decreased number of users, new number = ' +  str(trackedClasses[i]['users'])})
+	    return jsonify({'message': 'Some error occured'})
 
 	except Exception as e :
 		print(e)
