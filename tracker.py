@@ -45,10 +45,10 @@ def returnDepartmentList():
 	soup = BeautifulSoup(r.content,'html.parser')
 	datastring = soup.find_all('table')
 	for i in datastring:
-		print i.text.strip()
+		print (i.text.strip())
 		departments.append(i.text.strip())
 
-	print departments
+	print (departments)
 
 #returnDepartmentList()
 
