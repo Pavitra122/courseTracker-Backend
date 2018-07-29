@@ -19,6 +19,20 @@ application  = Flask(__name__)
 #sheet.delete_row(index)
 #sheet.insert_row(row, index)
 
+def updateLoop():
+	for j in range(100):
+		trackedClasses = sheet.get_all_records()
+		print ('Updating')
+		time.sleep(5)
+		for i in range(len(trackedClasses)):
+            #trackedClasses[i]['status'] = tracker.returnClassStatus(trackedClasses[i]['department'],trackedClasses[i]['courseNumber'], trackedClasses[i]['CRN'])
+			trackedClasses[i]['status'] = j
+			sheet.update_cell(i+2,5,trackedClasses[i]['status'])
+
+
+
+
+
 trackedClasses= []
 scope = ['https://spreadsheets.google.com/feeds',
          'https://www.googleapis.com/auth/drive']
@@ -141,17 +155,6 @@ def status():
 	except Exception as e :
 		print(e)
 		print('Error on line {}'.format(sys.exc_info()[-1].tb_lineno), type(e).__name__, e)
-
-
-def updateLoop():
-	for j in range(100):
-		trackedClasses = sheet.get_all_records()
-		print ('Updating')
-		time.sleep(5)
-		for i in range(len(trackedClasses)):
-            #trackedClasses[i]['status'] = tracker.returnClassStatus(trackedClasses[i]['department'],trackedClasses[i]['courseNumber'], trackedClasses[i]['CRN'])
-			trackedClasses[i]['status'] = j
-			sheet.update_cell(i+2,5,trackedClasses[i]['status'])
 
 
 
