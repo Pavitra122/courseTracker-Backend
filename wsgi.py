@@ -96,23 +96,23 @@ def add():
 def remove():
 	try:
 		trackedClasses = sheet.get_all_records()
-	    if 'courseNumber' in request.args:
-	        courseNumber = int(request.args['courseNumber'])
-	    if 'department' in request.args:
-	        department = request.args['department']
-	    if 'CRN' in request.args:
-	        CRN = int(request.args['CRN'])
+		if 'courseNumber' in request.args:
+			courseNumber = int(request.args['courseNumber'])
+		if 'department' in request.args:
+			department = request.args['department']
+		if 'CRN' in request.args:
+			CRN = int(request.args['CRN'])
 
-	    for i in range(len(trackedClasses)):
-	        if int(trackedClasses[i]['CRN']) == int(CRN):
-	            trackedClasses[i]['users'] = trackedClasses[i]['users'] - 1
-	            if trackedClasses[i]['users'] == 0:
-	                del trackedClasses[i]
-	                sheet.delete_row(i+2)
-	                return jsonify({ 'message' : 'Not tracking class anymore'})
-	            sheet.update_cell(i+2,4,trackedClasses[i]['users'] )
-	            return jsonify({'message' :  'Decreased number of users, new number = ' +  str(trackedClasses[i]['users'])})
-	    return jsonify({'message': 'Some error occured'})
+		for i in range(len(trackedClasses)):
+			if int(trackedClasses[i]['CRN']) == int(CRN):
+				trackedClasses[i]['users'] = trackedClasses[i]['users'] - 1
+				if trackedClasses[i]['users'] == 0:
+					del trackedClasses[i]
+					sheet.delete_row(i+2)
+					return jsonify({ 'message' : 'Not tracking class anymore'})
+				sheet.update_cell(i+2,4,trackedClasses[i]['users'] )
+				return jsonify({'message' :  'Decreased number of users, new number = ' +  str(trackedClasses[i]['users'])})
+		return jsonify({'message': 'Some error occured'})
 
 	except Exception as e :
 		print(e)
