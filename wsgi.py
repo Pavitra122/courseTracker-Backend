@@ -20,15 +20,20 @@ application  = Flask(__name__)
 #sheet.insert_row(row, index)
 
 def updateLoop():
-	for j in range(10000):
-		trackedClasses = sheet.get_all_records()
-		print ('Updating')
-		time.sleep(300)
-		for i in range(len(trackedClasses)):
-			#trackedClasses[i]['status'] = tracker.returnClassStatus(trackedClasses[i]['department'],trackedClasses[i]['courseNumber'], trackedClasses[i]['CRN'])
-			trackedClasses[i]['status'] = j
-			sheet.update_cell(i+2,5,trackedClasses[i]['status'])
 
+	try:
+		for j in range(10000):
+			trackedClasses = sheet.get_all_records()
+			print ('Updating')
+			time.sleep(300)
+			for i in range(len(trackedClasses)):
+				#trackedClasses[i]['status'] = tracker.returnClassStatus(trackedClasses[i]['department'],trackedClasses[i]['courseNumber'], trackedClasses[i]['CRN'])
+				trackedClasses[i]['status'] = j
+				sheet.update_cell(i+2,5,trackedClasses[i]['status'])
+
+	 except Exception as e:
+	    print (e)
+	    print('Error on line {}'.format(sys.exc_info()[-1].tb_lineno), type(e).__name__, e)
 
 
 

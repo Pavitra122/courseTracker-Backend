@@ -10,7 +10,7 @@ import time
 #from user_agent import generate_user_agent
 #from playsound import playsound
 
-url = "https://courses.illinois.edu/schedule/2018/fall/"
+
 
 def returnClassStatus(className, classNumber, CRN):
 
@@ -35,6 +35,25 @@ def returnClassStatus(className, classNumber, CRN):
 	except Exception as e :
 		print(e)
 		print('Error on line {}'.format(sys.exc_info()[-1].tb_lineno), type(e).__name__, e)
+
+
+def returnDepartmentList():
+
+	departments = []
+	url = 'https://courses.illinois.edu/schedule/2018/fall'
+	r = requests.get(url, timeout=5)
+	soup = BeautifulSoup(r.content,'html.parser')
+	datastring = soup.find_all('table')
+	for i in datastring:
+		print i.text.strip()
+		departments.append(i.text.strip())
+
+	print departments
+
+returnDepartmentList()
+
+
+
 
 
 
