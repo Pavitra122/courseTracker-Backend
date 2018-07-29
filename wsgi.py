@@ -70,12 +70,7 @@ def add():
             return jsonify('Added new course')
         else:
            return jsonify('Course Not found')
-    '''except Exception as e:
-        print (e)
-        exc_type, exc_obj, exc_tb = sys.exc_info()
-        tb = traceback.extract_tb(exc_tb)[-1]
-        print(exc_type, tb[2], tb[1])
-        return jsonify("Error occured")'''
+
 
 
 
