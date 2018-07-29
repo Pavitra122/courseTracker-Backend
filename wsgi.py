@@ -49,6 +49,7 @@ def resources():
 @application.route('/v1/course_track/add', methods=['GET'])
 def add():
      try:
+        trackedClasses = sheet.get_all_records()
         print (request.args)
         #print (json.loads(request.content.decode('utf-8')))
 
@@ -140,12 +141,14 @@ def status():
 
 
 def updateLoop():
-    while 1:
-        print ('Updating')
-        time.sleep(5)
-        for i in range(len(trackedClasses)):
-            trackedClasses[i]['status'] = tracker.returnClassStatus(trackedClasses[i]['department'],trackedClasses[i]['courseNumber'], trackedClasses[i]['CRN'])
-            sheet.update_cell(i+2,5,trackedClasses[i]['status'])
+    for j in range(100):
+		trackedClasses = sheet.get_all_records()
+		print ('Updating')
+		time.sleep(5)
+		for i in range(len(trackedClasses)):
+            #trackedClasses[i]['status'] = tracker.returnClassStatus(trackedClasses[i]['department'],trackedClasses[i]['courseNumber'], trackedClasses[i]['CRN'])
+			trackedClasses[i]['status'] = j
+			sheet.update_cell(i+2,5,trackedClasses[i]['status'])
 
 
 
