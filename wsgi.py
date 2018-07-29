@@ -20,10 +20,10 @@ application  = Flask(__name__)
 #sheet.insert_row(row, index)
 
 def updateLoop():
-	for j in range(100):
+	while 1:
 		trackedClasses = sheet.get_all_records()
 		print ('Updating')
-		time.sleep(5)
+		time.sleep(300)
 		for i in range(len(trackedClasses)):
             #trackedClasses[i]['status'] = tracker.returnClassStatus(trackedClasses[i]['department'],trackedClasses[i]['courseNumber'], trackedClasses[i]['CRN'])
 			trackedClasses[i]['status'] = j
