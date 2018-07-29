@@ -23,7 +23,7 @@ def updateLoop():
 	for j in range(10000):
 		trackedClasses = sheet.get_all_records()
 		print ('Updating')
-		time.sleep(3000)
+		time.sleep(300)
 		for i in range(len(trackedClasses)):
 			#trackedClasses[i]['status'] = tracker.returnClassStatus(trackedClasses[i]['department'],trackedClasses[i]['courseNumber'], trackedClasses[i]['CRN'])
 			trackedClasses[i]['status'] = j
