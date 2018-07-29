@@ -45,8 +45,8 @@ def resources():
 @application.route('/v1/course_track/add', methods=['GET'])
 def add():
     #try:
-        print request.args
-		print json.loads(request.content.decode('utf-8'))
+        print (request.args)
+		print (json.loads(request.content.decode('utf-8')))
 
         if 'courseNumber' in request.args:
             courseNumber = int(request.args['courseNumber'])
