@@ -31,9 +31,9 @@ def updateLoop():
 				trackedClasses[i]['status'] = j
 				sheet.update_cell(i+2,5,trackedClasses[i]['status'])
 
-	 except Exception as e:
-	    print (e)
-	    print('Error on line {}'.format(sys.exc_info()[-1].tb_lineno), type(e).__name__, e)
+	except Exception as e:
+		print (e)
+		print('Error on line {}'.format(sys.exc_info()[-1].tb_lineno), type(e).__name__, e)
 
 
 
