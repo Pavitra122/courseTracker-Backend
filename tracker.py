@@ -14,7 +14,7 @@ url = "https://courses.illinois.edu/schedule/2018/fall/"
 
 def returnClassStatus(className, classNumber, CRN):
 
-    try:
+	try:
 		url = "https://courses.illinois.edu/schedule/2018/fall/"
 		url = url + str(className) + "/" + str(classNumber)
 
@@ -32,9 +32,9 @@ def returnClassStatus(className, classNumber, CRN):
 				else:
 					return 'Open'
 		return 'Course Not found'
-    except Exception as e :
-        print(e)
-        print('Error on line {}'.format(sys.exc_info()[-1].tb_lineno), type(e).__name__, e)
+	except Exception as e :
+		print(e)
+		print('Error on line {}'.format(sys.exc_info()[-1].tb_lineno), type(e).__name__, e)
 
 
 
