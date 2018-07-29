@@ -20,8 +20,12 @@ application  = Flask(__name__)
 #sheet.insert_row(row, index)
 
 trackedClasses= []
-sheet = 0
-
+scope = ['https://spreadsheets.google.com/feeds',
+         'https://www.googleapis.com/auth/drive']
+creds = ServiceAccountCredentials.from_json_keyfile_name('Project-f939c591cfa1.json', scope)
+client = gspread.authorize(creds)
+print ("Initializing")
+sheet = client.open("courses").sheet1
 
 @application.route('/')
 def hello_world():
@@ -159,14 +163,9 @@ def returnArray():
 
 if __name__ == "__main__":
 
-    trackedClasses= []
-    scope = ['https://spreadsheets.google.com/feeds',
-             'https://www.googleapis.com/auth/drive']
 
-    creds = ServiceAccountCredentials.from_json_keyfile_name('Project-f939c591cfa1.json', scope)
-    client = gspread.authorize(creds)
-    print ("Initializing")
-    sheet = client.open("courses").sheet1
+
+
     trackedClasses = sheet.get_all_records()
 
     t1 = threading.Thread(target=updateLoop, args=())
