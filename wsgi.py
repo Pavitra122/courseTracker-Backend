@@ -19,30 +19,6 @@ application  = Flask(__name__)
 #sheet.delete_row(index)
 #sheet.insert_row(row, index)
 
-def updateLoop():
-
-	try:
-		for j in range(10000):
-			trackedClasses = sheet.get_all_records()
-			print ('Updating')
-			time.sleep(300)
-			for i in range(len(trackedClasses)):
-				#trackedClasses[i]['status'] = tracker.returnClassStatus(trackedClasses[i]['department'],trackedClasses[i]['courseNumber'], trackedClasses[i]['CRN'])
-				trackedClasses[i]['status'] = j
-				sheet.update_cell(i+2,5,trackedClasses[i]['status'])
-
-	except Exception as e:
-		print (e)
-		print('Error on line {}'.format(sys.exc_info()[-1].tb_lineno), type(e).__name__, e)
-		scope = ['https://spreadsheets.google.com/feeds',
-		         'https://www.googleapis.com/auth/drive']
-		creds = ServiceAccountCredentials.from_json_keyfile_name('Project-f939c591cfa1.json', scope)
-		client = gspread.authorize(creds)
-		print ("Initializing")
-		sheet = client.open("courses").sheet1
-
-
-
 
 trackedClasses= []
 scope = ['https://spreadsheets.google.com/feeds',
@@ -51,6 +27,32 @@ creds = ServiceAccountCredentials.from_json_keyfile_name('Project-f939c591cfa1.j
 client = gspread.authorize(creds)
 print ("Initializing")
 sheet = client.open("courses").sheet1
+
+def updateLoop():
+
+	for j in range(10000):
+		try:
+				trackedClasses = sheet.get_all_records()
+				print ('Updating')
+				time.sleep(3)
+				for i in range(len(trackedClasses)):
+					#trackedClasses[i]['status'] = tracker.returnClassStatus(trackedClasses[i]['department'],trackedClasses[i]['courseNumber'], trackedClasses[i]['CRN'])
+					trackedClasses[i]['status'] = j
+					sheet.update_cell(i+2,5,trackedClasses[i]['status'])
+
+		except Exception as e:
+			print (e)
+			print('Error on line {}'.format(sys.exc_info()[-1].tb_lineno), type(e).__name__, e)
+			scope = ['https://spreadsheets.google.com/feeds',
+			         'https://www.googleapis.com/auth/drive']
+			creds = ServiceAccountCredentials.from_json_keyfile_name('Project-f939c591cfa1.json', scope)
+			client = gspread.authorize(creds)
+			print ("Initializing")
+			sheet = client.open("courses").sheet1
+
+
+
+
 t1 = threading.Thread(target=updateLoop, args=())
 t1.start()
 
