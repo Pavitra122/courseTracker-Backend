@@ -44,7 +44,7 @@ def resources():
 
 @application.route('/v1/course_track/add', methods=['GET'])
 def add():
-    #try:
+     try:
         print (request.args)
         #print (json.loads(request.content.decode('utf-8')))
 
@@ -71,6 +71,11 @@ def add():
         else:
            return jsonify({'message' : 'Course Not found'})
 
+     except Exception as e:
+        print (e)
+        print('Error on line {}'.format(sys.exc_info()[-1].tb_lineno), type(e).__name__, e)
+
+
 
 
 
@@ -82,23 +87,29 @@ def add():
 
 @application.route('/v1/course_track/delete', methods=['GET'])
 def remove():
-    if 'courseNumber' in request.args:
-        courseNumber = int(request.args['courseNumber'])
-    if 'department' in request.args:
-        department = request.args['department']
-    if 'CRN' in request.args:
-        CRN = int(request.args['CRN'])
+	try:
+	    if 'courseNumber' in request.args:
+	        courseNumber = int(request.args['courseNumber'])
+	    if 'department' in request.args:
+	        department = request.args['department']
+	    if 'CRN' in request.args:
+	        CRN = int(request.args['CRN'])
 
-    for i in range(len(trackedClasses)):
-        if int(trackedClasses[i]['CRN']) == int(CRN):
-            trackedClasses[i]['users'] = trackedClasses[i]['users'] - 1
-            if trackedClasses[i]['users'] == 0:
-                del trackedClasses[i]
-                sheet.delete_row(i+2)
-                return 'Not tracking class anymore'
-            sheet.update_cell(i+2,4,trackedClasses[i]['users'] )
-            return 'Decreased number of users, new number = ' +  str(trackedClasses[i]['users'])
-    return 'Some error occured'
+	    for i in range(len(trackedClasses)):
+	        if int(trackedClasses[i]['CRN']) == int(CRN):
+	            trackedClasses[i]['users'] = trackedClasses[i]['users'] - 1
+	            if trackedClasses[i]['users'] == 0:
+	                del trackedClasses[i]
+	                sheet.delete_row(i+2)
+	                return 'Not tracking class anymore'
+	            sheet.update_cell(i+2,4,trackedClasses[i]['users'] )
+	            return 'Decreased number of users, new number = ' +  str(trackedClasses[i]['users'])
+	    return 'Some error occured'
+
+	except Exception as e :
+		print(e)
+		print('Error on line {}'.format(sys.exc_info()[-1].tb_lineno), type(e).__name__, e)
+
 
 
 
@@ -119,7 +130,9 @@ def status():
 			CRN = int(request.args['CRN'])
 		print (department,courseNumber,CRN)
 		return tracker.returnClassStatus(department,courseNumber,CRN)
-	except Exception as e :print(e)
+	except Exception as e :
+		print(e)
+		print('Error on line {}'.format(sys.exc_info()[-1].tb_lineno), type(e).__name__, e)
 
 
 def updateLoop():
@@ -137,9 +150,11 @@ def updateLoop():
 
 @application.route('/v1/course_track/return_list', methods = ['GET'])
 def returnArray():
-	try:
+    try:
 		return jsonify(trackedClasses)
-	except Exception as e :print(e)
+    except Exception as e :
+        print(e)
+        print('Error on line {}'.format(sys.exc_info()[-1].tb_lineno), type(e).__name__, e)
 
 
 if __name__ == "__main__":
