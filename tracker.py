@@ -21,7 +21,7 @@ def returnClassStatus(className, classNumber, CRN):
 		r = requests.get(url, timeout=5)
 		soup = BeautifulSoup(r.content,'html.parser')
 
-		datastring = soup.find_all('script')[3].text.decode("utf-8")[26:-93]
+		datastring = soup.find_all('script')[3].text[26:-93]
 		courses = json.loads(datastring)
 
 
