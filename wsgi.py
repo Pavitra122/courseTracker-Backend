@@ -141,7 +141,7 @@ def status():
 
 
 def updateLoop():
-    for j in range(100):
+	for j in range(100):
 		trackedClasses = sheet.get_all_records()
 		print ('Updating')
 		time.sleep(5)
