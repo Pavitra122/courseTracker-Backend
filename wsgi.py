@@ -59,7 +59,7 @@ def updateLoop():
 
 
 t1 = threading.Thread(target=updateLoop, args=())
-t1.start()
+
 t2 = threading.Thread(target=updateSectionList.updateSections(), args=())
 
 
@@ -200,6 +200,7 @@ if __name__ == "__main__":
 
 
 	application.run()
+	t1.start()
 	t2.start()
 	t1.join()
 	#t2.join()
