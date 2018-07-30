@@ -4,6 +4,7 @@
 from flask import Flask
 from flask import request, jsonify
 import tracker
+import updateSectionList
 import sys, os, traceback
 import time
 import gspread
@@ -30,15 +31,18 @@ sheet = client.open("courses").sheet1
 
 def updateLoop():
 
+	flag = 0
 	for j in range(10000):
 		try:
 				trackedClasses = sheet.get_all_records()
 				print ('Updating')
-				time.sleep(300)
+				if flag ==0:
+					time.sleep(300)
 				for i in range(len(trackedClasses)):
 					#trackedClasses[i]['status'] = tracker.returnClassStatus(trackedClasses[i]['department'],trackedClasses[i]['courseNumber'], trackedClasses[i]['CRN'])
 					trackedClasses[i]['status'] = j
 					sheet.update_cell(i+2,5,trackedClasses[i]['status'])
+				flag = 0
 
 		except Exception as e:
 			print (e)
@@ -47,14 +51,17 @@ def updateLoop():
 			         'https://www.googleapis.com/auth/drive']
 			creds = ServiceAccountCredentials.from_json_keyfile_name('Project-f939c591cfa1.json', scope)
 			client = gspread.authorize(creds)
-			print ("Initializing")
+			print ("Re Authorizing")
 			sheet = client.open("courses").sheet1
+			flag = 1
 
 
 
 
 t1 = threading.Thread(target=updateLoop, args=())
 t1.start()
+t2 = threading.Thread(target=updateSectionList.updateSections(), args=())
+t2.start()
 
 @application.route('/')
 def hello_world():
@@ -188,12 +195,13 @@ if __name__ == "__main__":
 
 
 
-    trackedClasses = sheet.get_all_records()
+	trackedClasses = sheet.get_all_records()
 
 
 
-    application.run()
-    t1.join()
+	application.run()
+	t1.join()
+	t2.join()
 
 
 
