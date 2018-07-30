@@ -57,9 +57,10 @@ def updateLoop():
 
 
 
-application.run()
+
 t1 = threading.Thread(target=updateLoop, args=())
 t1.start()
+application.run()
 t2 = threading.Thread(target=updateSectionList.updateSections(), args=())
 t2.start()
 
