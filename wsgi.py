@@ -4,7 +4,6 @@
 from flask import Flask
 from flask import request, jsonify
 import tracker
-import updateSectionList
 import sys, os, traceback
 import time
 import gspread
@@ -59,9 +58,7 @@ def updateLoop():
 
 
 t1 = threading.Thread(target=updateLoop, args=())
-
-t2 = threading.Thread(target=updateSectionList.updateSections(), args=())
-
+t1.start()
 
 @application.route('/')
 def hello_world():
@@ -195,15 +192,12 @@ if __name__ == "__main__":
 
 
 
-	trackedClasses = sheet.get_all_records()
+    trackedClasses = sheet.get_all_records()
 
 
 
-	application.run()
-	t1.start()
-	t2.start()
-	t1.join()
-	#t2.join()
+    application.run()
+    t1.join()
 
 
 
