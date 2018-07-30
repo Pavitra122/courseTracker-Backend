@@ -53,7 +53,7 @@ def updateSections():
 	departmentClasses = sheet.get_all_records()
 
 	index = 1
-	for deparment in departmentClasses[:1]:
+	for deparment in departmentClasses:
 		row = []
 		row.append(deparment['department'])
 		i = 1
@@ -63,7 +63,11 @@ def updateSections():
 		print (row)
 		rows = getSections(row)
 		for row in rows:
-			sheet2.insert_row(row, index)
+			if sheet2.cell(index,1) == '':
+				print ('writing row')
+				sheet2.insert_row(row, index)
+			else:
+				print ('Not writing row')
 			index = index +1
 
 
