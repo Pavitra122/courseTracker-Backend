@@ -16,7 +16,7 @@ def getSections(row):
 
 	returnList = []
 	for number in courseNumbers:
-		time.sleep(2)
+		time.sleep(5)
 		sections = []
 		print (number)
 		url = "https://courses.illinois.edu/schedule/2018/fall/"
