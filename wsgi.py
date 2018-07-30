@@ -60,9 +60,8 @@ def updateLoop():
 
 t1 = threading.Thread(target=updateLoop, args=())
 t1.start()
-application.run()
 t2 = threading.Thread(target=updateSectionList.updateSections(), args=())
-t2.start()
+
 
 @application.route('/')
 def hello_world():
@@ -200,9 +199,10 @@ if __name__ == "__main__":
 
 
 
-
+	application.run()
+	t2.start()
 	t1.join()
-	t2.join()
+	#t2.join()
 
 
 
