@@ -3,8 +3,8 @@ from oauth2client.service_account import ServiceAccountCredentials
 from bs4 import BeautifulSoup
 import requests
 import json
-
-
+import sys
+import time
 
 
 
@@ -16,6 +16,7 @@ def getSections(row):
 
 	returnList = []
 	for number in courseNumbers:
+		time.sleep(2)
 		sections = []
 		print (number)
 		url = "https://courses.illinois.edu/schedule/2018/fall/"
@@ -42,33 +43,45 @@ def getSections(row):
 
 def updateSections():
 
-	scope = ['https://spreadsheets.google.com/feeds',
-	         'https://www.googleapis.com/auth/drive']
-	creds = ServiceAccountCredentials.from_json_keyfile_name('Project-f939c591cfa1.json', scope)
-	client = gspread.authorize(creds)
-	print ("Initializing")
-	sheet2 = client.open("Department and courses").get_worksheet(1)
-	sheet = client.open("Department and courses").sheet1
+	while 1:
+		try:
+			scope = ['https://spreadsheets.google.com/feeds',
+			         'https://www.googleapis.com/auth/drive']
+			creds = ServiceAccountCredentials.from_json_keyfile_name('Project-f939c591cfa1.json', scope)
+			client = gspread.authorize(creds)
+			print ("Initializing")
+			sheet2 = client.open("Department and courses").get_worksheet(1)
+			sheet = client.open("Department and courses").sheet1
 
-	departmentClasses = sheet.get_all_records()
+			departmentClasses = sheet.get_all_records()
 
-	index = 1
-	for deparment in departmentClasses:
-		row = []
-		row.append(deparment['department'])
-		i = 1
-		while deparment['course'+str(i)] != '':
-			row.append(deparment['course'+str(i)])
-			i = i+1
-		print (row)
-		rows = getSections(row)
-		for row in rows:
-			if sheet2.cell(index,1) == '':
-				print ('writing row')
-				sheet2.insert_row(row, index)
-			else:
-				print ('Not writing row')
-			index = index +1
+			index = 1
+			for deparment in departmentClasses:
+				row = []
+				row.append(deparment['department'])
+				i = 1
+				while deparment['course'+str(i)] != '':
+					row.append(deparment['course'+str(i)])
+					i = i+1
+				print (row)
+				rows = getSections(row)
+				for row in rows:
+					time.sleep(2)
+					print sheet2.cell(index,1).value
+					if sheet2.cell(index,1).value == '':
+						print ('writing row')
+						sheet2.insert_row(row, index)
+					else:
+						print ('Not writing row')
+					index = index +1
+		except Exception as e:
+			print (e)
+			print('Error on line {}'.format(sys.exc_info()[-1].tb_lineno), type(e).__name__, e)
+			scope = ['https://spreadsheets.google.com/feeds',
+					 'https://www.googleapis.com/auth/drive']
+			creds = ServiceAccountCredentials.from_json_keyfile_name('Project-f939c591cfa1.json', scope)
+			client = gspread.authorize(creds)
+			print ("Re Authorizing - section update")
 
 
 
