@@ -21,7 +21,7 @@ def getSections(row):
 		print (number)
 		url = "https://courses.illinois.edu/schedule/2018/fall/"
 		url = url + str(deptName) + "/" + str(number)
-		r = requests.get(url, timeout=5)
+		r = requests.get(url, timeout=25)
 		soup = BeautifulSoup(r.content,'html.parser')
 
 		datastring = soup.find_all('script')[3].text[26:-93]
