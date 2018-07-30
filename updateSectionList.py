@@ -67,7 +67,6 @@ def updateSections():
 				rows = getSections(row)
 				for row in rows:
 					time.sleep(2)
-					print sheet2.cell(index,1).value
 					if sheet2.cell(index,1).value == '':
 						print ('writing row')
 						sheet2.insert_row(row, index)
