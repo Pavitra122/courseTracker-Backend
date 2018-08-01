@@ -2,7 +2,7 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from bs4 import BeautifulSoup
 import requests
-
+import time
 
 
 
@@ -54,7 +54,7 @@ def populateCourses():
 		a = returnCoursesForDept(department)
 		#courses[department] = a
 		sheet.insert_row([department]+ [i for i in a] , index+1)
-
+		time.sleep(0.0117647)
 	#print courses
 
 
