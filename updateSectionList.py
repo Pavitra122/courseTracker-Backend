@@ -54,9 +54,9 @@ def updateSections():
 			sheet = client.open("Department and courses").sheet1
 
 			departmentClasses = sheet.get_all_records()
-
-			index = 279
-			for deparment in departmentClasses[14:]:
+			time.sleep(5)
+			index = 491
+			for deparment in departmentClasses[21:]:
 				row = []
 				row.append(deparment['department'])
 				i = 1
@@ -66,10 +66,10 @@ def updateSections():
 				print (row)
 				rows = getSections(row)
 				for row in rows:
-					time.sleep(0.023529)  #Limiting to 90 requests per second
+					time.sleep(1)  #Limiting to 90 requests per second
 					if sheet2.cell(index,1).value == '':
 						print ('writing row')
-						time.sleep(0.5)
+						time.sleep(1)
 						sheet2.insert_row(row, index)
 					else:
 						print ('Not writing row')
