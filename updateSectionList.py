@@ -55,8 +55,8 @@ def updateSections():
 
 			departmentClasses = sheet.get_all_records()
 			time.sleep(10)
-			index = 279
-			for deparment in departmentClasses[14:]:
+			index = 607
+			for deparment in departmentClasses[28:]:
 				row = []
 				row.append(deparment['department'])
 				i = 1
