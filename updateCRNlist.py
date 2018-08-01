@@ -62,7 +62,7 @@ def updateCRN():
 			creds = ServiceAccountCredentials.from_json_keyfile_name('Project-f939c591cfa1.json', scope)
 			client = gspread.authorize(creds)
 			print ("Initializing")
-			sheet2 = client.open("Department and courses").get_worksheet(2)
+			sheet3 = client.open("Department and courses").get_worksheet(2)
 			sheet = client.open("Department and courses").sheet1
 
 			departmentClasses = sheet.get_all_records()
@@ -81,10 +81,10 @@ def updateCRN():
 				rows = getSections(row)
 				for row in rows:
 					time.sleep(1.7)  #Limiting to 90 requests per second
-					if sheet2.cell(index_temp,1).value == '':
+					if sheet3.cell(index_temp,1).value == '':
 						print ('writing row')
 						#time.sleep(1.5)
-						sheet2.insert_row(row, index_temp)
+						#sheet3.insert_row(row, index_temp)
 						index_temp = index_temp +1
 					else:
 						print ('Not writing row')
