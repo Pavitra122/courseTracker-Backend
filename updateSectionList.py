@@ -16,7 +16,7 @@ def getSections(row):
 
 	returnList = []
 	for number in courseNumbers:
-		time.sleep(5)
+		#time.sleep(5)
 		sections = []
 		print (number)
 		url = "https://courses.illinois.edu/schedule/2018/fall/"
@@ -55,8 +55,8 @@ def updateSections():
 
 			departmentClasses = sheet.get_all_records()
 
-			index = 1
-			for deparment in departmentClasses:
+			index = 279
+			for deparment in departmentClasses[14:]:
 				row = []
 				row.append(deparment['department'])
 				i = 1
@@ -66,7 +66,7 @@ def updateSections():
 				print (row)
 				rows = getSections(row)
 				for row in rows:
-					time.sleep(2)
+					#time.sleep(2)
 					if sheet2.cell(index,1).value == '':
 						print ('writing row')
 						sheet2.insert_row(row, index)
@@ -84,7 +84,7 @@ def updateSections():
 
 
 
-#updateSections()
+updateSections()
 
 
 

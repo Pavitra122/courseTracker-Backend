@@ -4,6 +4,7 @@
 from flask import Flask
 from flask import request, jsonify
 import tracker
+import updateSectionList
 import sys, os, traceback
 import time
 import gspread
@@ -66,7 +67,13 @@ def hello_world():
 
 
 
-
+@application.route('/v1/updateSectionList')
+def updateDatabases():
+	try:
+		updateSectionList.updateSections()
+		return "Success"
+	return
+		return "Failure"
 
 
 @application.route('/v1/', methods=['GET'])
