@@ -29,7 +29,7 @@ def getCRN(row):
 				#sections.append(str(deptName) + ' ' + str(number))
 				for course in courses:
 
-					print (course['crn'])
+					#print (course['crn'])
 					returnList.append([course['crn'] , deptName , number])
 
 
