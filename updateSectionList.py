@@ -39,7 +39,7 @@ def getSections(row):
 
 				returnList.append(sections)
 			except:
-				print "Error occured in course" + str(deptName) + str(number)
+				print ("Error occured in course" + str(deptName) + str(number))
 				return []
 
 		return returnList
