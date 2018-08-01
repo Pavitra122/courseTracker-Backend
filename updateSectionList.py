@@ -11,39 +11,45 @@ import time
 
 def getSections(row):
 
-	deptName = row[0]
-	courseNumbers = row[1:]
+	try:
+		deptName = row[0]
+		courseNumbers = row[1:]
 
-	returnList = []
-	for number in courseNumbers:
-		#time.sleep(5)
-		sections = []
-		print (number)
-		url = "https://courses.illinois.edu/schedule/2018/fall/"
-		url = url + str(deptName) + "/" + str(number)
-		r = requests.get(url, timeout=25)
-		soup = BeautifulSoup(r.content,'html.parser')
+		returnList = []
+		for number in courseNumbers:
+			#time.sleep(5)
+			sections = []
+			print (number)
+			url = "https://courses.illinois.edu/schedule/2018/fall/"
+			url = url + str(deptName) + "/" + str(number)
+			r = requests.get(url, timeout=25)
+			soup = BeautifulSoup(r.content,'html.parser')
 
-		datastring = soup.find_all('script')[3].text[26:-93]
-		courses = json.loads(datastring)
-		sections.append(str(deptName) + ' ' + str(number))
-		for course in courses:
+			datastring = soup.find_all('script')[3].text[26:-93]
+			courses = json.loads(datastring)
+			sections.append(str(deptName) + ' ' + str(number))
+			for course in courses:
 
-			soup =  BeautifulSoup(course['section'] ,'html.parser')
-			#<div class="app-meeting">AD1</div>
-			soup = soup.div.text
-			print (soup)
-			sections.append(soup)
+				soup =  BeautifulSoup(course['section'] ,'html.parser')
+				#<div class="app-meeting">AD1</div>
+				soup = soup.div.text
+				print (soup)
+				sections.append(soup)
 
-		returnList.append(sections)
+			returnList.append(sections)
 
-	return returnList
-
+		return returnList
+	except Exception as e:
+		print (e)
+		print('Error on line {}'.format(sys.exc_info()[-1].tb_lineno), type(e).__name__, e)
 
 
 def updateSections():
 
+	department = 28
+	index = 607
 	while 1:
+
 		try:
 			scope = ['https://spreadsheets.google.com/feeds',
 			         'https://www.googleapis.com/auth/drive']
@@ -55,8 +61,10 @@ def updateSections():
 
 			departmentClasses = sheet.get_all_records()
 			time.sleep(10)
-			index = 607
-			for deparment in departmentClasses[28:]:
+			index1 = index
+			department1 = department
+			for deparment in departmentClasses[deparment1:]:
+
 				row = []
 				row.append(deparment['department'])
 				i = 1
@@ -70,10 +78,12 @@ def updateSections():
 					if sheet2.cell(index,1).value == '':
 						print ('writing row')
 						time.sleep(1)
-						sheet2.insert_row(row, index)
+						sheet2.insert_row(row, index1)
+						index1 = index1 +1
 					else:
 						print ('Not writing row')
-					index = index +1
+				deparment = department + 1
+				index = index1
 		except Exception as e:
 			print (e)
 			print('Error on line {}'.format(sys.exc_info()[-1].tb_lineno), type(e).__name__, e)
