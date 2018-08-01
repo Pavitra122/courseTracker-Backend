@@ -75,7 +75,7 @@ def updateCRN():
 				print (row)
 				rows = getCRN(row)
 				for row in rows:
-					time.sleep(1.7)  #Limiting to 90 requests per second
+					time.sleep(2)  #Limiting to 98.333 requests per second
 					if sheet3.cell(index_temp,1).value == '':
 						print ('writing row')
 						#print row
