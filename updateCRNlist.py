@@ -13,11 +13,9 @@ def getCRN(row):
 	try:
 		deptName = row[0]
 		courseNumbers = row[1:]
-
 		returnList = []
 		for number in courseNumbers:
 			#time.sleep(5)
-			sections = []
 			print (number)
 			url = "https://courses.illinois.edu/schedule/2018/fall/"
 			url = url + str(deptName) + "/" + str(number)
@@ -28,19 +26,16 @@ def getCRN(row):
 			try:
 				courses = json.loads(datastring)
 
-				sections.append(str(deptName) + ' ' + str(number))
+				#sections.append(str(deptName) + ' ' + str(number))
 				for course in courses:
 
-					print course
-					break
-					soup =  BeautifulSoup(course['section'] ,'html.parser')
-					#<div class="app-meeting">AD1</div>
-					soup = soup.div.text
-					print (soup)
-					sections.append(soup)
+					print (course['crn'])
+					returnList.append([course['crn'] , deptName , number])
 
-				returnList.append(sections)
-			except:
+
+			except Exception as e:
+				print (e)
+				print('Error on line {}'.format(sys.exc_info()[-1].tb_lineno), type(e).__name__, e)
 				print ("Error occured in course" + str(deptName) + str(number))
 				return []
 
@@ -66,7 +61,7 @@ def updateCRN():
 			sheet = client.open("Department and courses").sheet1
 
 			departmentClasses = sheet.get_all_records()
-			time.sleep(10)
+			#time.sleep(10)
 			index_temp = index
 			department_temp = department
 			for deparment in departmentClasses[department_temp:]:
@@ -78,13 +73,14 @@ def updateCRN():
 					row.append(deparment['course'+str(i)])
 					i = i+1
 				print (row)
-				rows = getSections(row)
+				rows = getCRN(row)
 				for row in rows:
 					time.sleep(1.7)  #Limiting to 90 requests per second
 					if sheet3.cell(index_temp,1).value == '':
 						print ('writing row')
+						#print row
 						#time.sleep(1.5)
-						#sheet3.insert_row(row, index_temp)
+						sheet3.insert_row(row, index_temp)
 						index_temp = index_temp +1
 					else:
 						print ('Not writing row')
