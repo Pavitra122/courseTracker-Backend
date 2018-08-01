@@ -70,9 +70,10 @@ def hello_world():
 @application.route('/v1/updateSectionList')
 def updateDatabases():
 	try:
+		print ("Started updating database")
 		updateSectionList.updateSections()
 		return "Success"
-	return
+	except:
 		return "Failure"
 
 
