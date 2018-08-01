@@ -26,17 +26,21 @@ def getSections(row):
 			soup = BeautifulSoup(r.content,'html.parser')
 
 			datastring = soup.find_all('script')[3].text[26:-93]
-			courses = json.loads(datastring)
-			sections.append(str(deptName) + ' ' + str(number))
-			for course in courses:
+			try:
+				courses = json.loads(datastring)
+				sections.append(str(deptName) + ' ' + str(number))
+				for course in courses:
 
-				soup =  BeautifulSoup(course['section'] ,'html.parser')
-				#<div class="app-meeting">AD1</div>
-				soup = soup.div.text
-				print (soup)
-				sections.append(soup)
+					soup =  BeautifulSoup(course['section'] ,'html.parser')
+					#<div class="app-meeting">AD1</div>
+					soup = soup.div.text
+					print (soup)
+					sections.append(soup)
 
-			returnList.append(sections)
+				returnList.append(sections)
+			except:
+				print "Error occured in course" + str(deptName) + str(number)
+				return []
 
 		return returnList
 	except Exception as e:
