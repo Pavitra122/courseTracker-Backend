@@ -69,6 +69,7 @@ def updateSections():
 					time.sleep(0.023529)  #Limiting to 90 requests per second
 					if sheet2.cell(index,1).value == '':
 						print ('writing row')
+						time.sleep(0.5)
 						sheet2.insert_row(row, index)
 					else:
 						print ('Not writing row')
