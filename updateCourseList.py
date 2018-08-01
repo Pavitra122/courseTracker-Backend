@@ -54,7 +54,7 @@ def populateCourses():
 		a = returnCoursesForDept(department)
 		#courses[department] = a
 		sheet.insert_row([department]+ [i for i in a] , index+1)
-		time.sleep(0.0117647)
+		time.sleep(1)
 	#print courses
 
 
