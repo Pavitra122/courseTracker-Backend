@@ -84,7 +84,7 @@ def updateSections():
 
 
 
-#updateSections()
+updateSections()
 
 
 

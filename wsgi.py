@@ -4,7 +4,7 @@
 from flask import Flask
 from flask import request, jsonify
 import tracker
-import updateSectionList
+#import updateSectionList
 import sys, os, traceback
 import time
 import gspread
@@ -71,7 +71,7 @@ def hello_world():
 def updateDatabases():
 	try:
 		print ("Started updating database")
-		updateSectionList.updateSections()
+		#updateSectionList.updateSections()
 		return "Success"
 	except:
 		return "Failure"
