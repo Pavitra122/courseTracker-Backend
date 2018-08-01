@@ -54,9 +54,9 @@ def updateSections():
 			sheet = client.open("Department and courses").sheet1
 
 			departmentClasses = sheet.get_all_records()
-			time.sleep(5)
-			index = 491
-			for deparment in departmentClasses[21:]:
+			time.sleep(10)
+			index = 279
+			for deparment in departmentClasses[14:]:
 				row = []
 				row.append(deparment['department'])
 				i = 1
