@@ -50,8 +50,8 @@ def getSections(row):
 
 def updateSections():
 
-	department = 28
-	index = 607
+	department = 0
+	index = 1
 	while 1:
 
 		try:
@@ -78,10 +78,10 @@ def updateSections():
 				print (row)
 				rows = getSections(row)
 				for row in rows:
-					time.sleep(1)  #Limiting to 90 requests per second
+					time.sleep(1.5)  #Limiting to 90 requests per second
 					if sheet2.cell(index,1).value == '':
 						print ('writing row')
-						time.sleep(1)
+						time.sleep(1.5)
 						sheet2.insert_row(row, index1)
 						index1 = index1 +1
 					else:
