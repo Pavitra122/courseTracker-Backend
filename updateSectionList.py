@@ -63,7 +63,7 @@ def updateSections():
 			time.sleep(10)
 			index1 = index
 			department1 = department
-			for deparment in departmentClasses[deparment1:]:
+			for deparment in departmentClasses[department1:]:
 
 				row = []
 				row.append(deparment['department'])
