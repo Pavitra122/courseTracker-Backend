@@ -86,6 +86,7 @@ def updateSections():
 						index_temp = index_temp +1
 					else:
 						print ('Not writing row')
+						index_temp = index_temp +1
 				department = department + 1
 				index = index_temp
 		except Exception as e:

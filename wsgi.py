@@ -66,10 +66,6 @@ def hello_world():
     return '<h1>Course Tracker</h1><p>A prototype API</p>'
 
 
-@application.route('/sruthi')
-def sruthi():
-	return '<h1>Sruthu</h1><p>Sruthu is bae</p>'
-
 
 @application.route('/v1/updateSectionList')
 def updateDatabases():
