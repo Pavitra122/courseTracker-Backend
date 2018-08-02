@@ -75,7 +75,7 @@ def updateCRN():
 				i = 1
 
 				while deparment['course'+str(i)] != '' and i < sheet.col_count - 1:
-					row.append(str(deparment['course'+str(i)]))
+					row.append(deparment['course'+str(i)])
 					i = i+1
 
 				print (row)
