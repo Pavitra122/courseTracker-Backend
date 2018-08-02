@@ -69,14 +69,18 @@ def updateCRN():
 				row = []
 				row.append(deparment['department'])
 				i = 1
-				while deparment['course'+str(i)] != '':
-					row.append(deparment['course'+str(i)])
-					i = i+1
+				try:
+					while deparment['course'+str(i)] != '':
+						row.append(deparment['course'+str(i)])
+						i = i+1
+				except:
+					print ("Error...."+ str('course'+str(i))+ "....ignoring error")
+					pass
 				print (row)
 				rows = getCRN(row)
 				for row in rows:
 					time.sleep(2)  #Limiting to 98.333 requests per second
-					
+
 					print (index_temp)
 					if sheet3.cell(index_temp,1).value == '':
 						print ('writing row')
