@@ -18,8 +18,8 @@ def getCRN(row):
 			#time.sleep(5)
 			print (number)
 			url = "https://courses.illinois.edu/schedule/2018/fall/"
-			if deptName == 'MUS' and number == '90':
-				print('MUS 090 Exception occured !!!!!!')
+			if deptName == 'MUS' and number == 90:
+				print('MUS 090 vala Exception occured !!!!!!')
 				url = url + str(deptName) + "/" + str('090')
 			else:
 				url = url + str(deptName) + "/" + str(number)
