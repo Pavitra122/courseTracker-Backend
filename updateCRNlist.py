@@ -75,7 +75,6 @@ def updateCRN():
 						i = i+1
 				except:
 					print ("Error...."+ str('course'+str(i))+ "....ignoring error")
-					pass
 				print (row)
 				rows = getCRN(row)
 				for row in rows:
