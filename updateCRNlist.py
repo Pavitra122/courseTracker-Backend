@@ -18,7 +18,11 @@ def getCRN(row):
 			#time.sleep(5)
 			print (number)
 			url = "https://courses.illinois.edu/schedule/2018/fall/"
-			url = url + str(deptName) + "/" + str(number)
+			if deptName == 'MUS' and number == '90':
+				print('MUS 090 Exception occured !!!!!!')
+				url = url + str(deptName) + "/" + str('090')
+			else:
+				url = url + str(deptName) + "/" + str(number)
 			r = requests.get(url, timeout=25)
 			soup = BeautifulSoup(r.content,'html.parser')
 
@@ -60,7 +64,6 @@ def updateCRN():
 			print ("Initializing")
 			sheet3 = client.open("Department and courses").get_worksheet(2)
 			sheet = client.open("Department and courses").sheet1
-
 			departmentClasses = sheet.get_all_records()
 			#time.sleep(10)
 			index_temp = index
@@ -71,8 +74,8 @@ def updateCRN():
 				row.append(deparment['department'])
 				i = 1
 
-				while deparment['course'+str(i)] != '' and i< sheet.col_count:
-					row.append(deparment['course'+str(i)])
+				while deparment['course'+str(i)] != '' and i < sheet.col_count - 1:
+					row.append(str(deparment['course'+str(i)]))
 					i = i+1
 
 				print (row)
