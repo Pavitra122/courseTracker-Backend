@@ -52,6 +52,7 @@ def updateCRN():
 	while 1:
 
 		try:
+
 			scope = ['https://spreadsheets.google.com/feeds',
 			         'https://www.googleapis.com/auth/drive']
 			creds = ServiceAccountCredentials.from_json_keyfile_name('Project-f939c591cfa1.json', scope)
@@ -69,12 +70,11 @@ def updateCRN():
 				row = []
 				row.append(deparment['department'])
 				i = 1
-				try:
-					while deparment['course'+str(i)] != '':
-						row.append(deparment['course'+str(i)])
-						i = i+1
-				except:
-					print ("Error...."+ str('course'+str(i))+ "....ignoring error")
+
+				while deparment['course'+str(i)] != '' and i< sheet.col_count:
+					row.append(deparment['course'+str(i)])
+					i = i+1
+
 				print (row)
 				rows = getCRN(row)
 				for row in rows:
