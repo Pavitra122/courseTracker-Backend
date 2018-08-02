@@ -47,8 +47,8 @@ def getCRN(row):
 
 def updateCRN():
 
-	department = 0
-	index = 1
+	department = 42
+	index = 1810
 	while 1:
 
 		try:
