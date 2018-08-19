@@ -124,7 +124,7 @@ def get_course():
 
 	if request.method == 'POST':
 		args=json.loads(request.data)
-		print args
+		print (args)
 		crn = args["crn"]
 		#print "CRN",crn
 		try:
