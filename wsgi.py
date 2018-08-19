@@ -124,7 +124,7 @@ def get_course():
 
 	try:
 			if request.method == 'POST':
-				args=json.loads(request.data.decode('utf-8'))
+				args=json.loads(str(request.data))
 				print (args)
 				crn = args["crn"]
 				#print "CRN",crn
@@ -187,7 +187,7 @@ def add():
 		trackedClasses = sheet.get_all_records()
 		print (request.data)
         #print (json.loads(request.content.decode('utf-8')))
-		args = json.loads(request.data.decode('utf-8'))
+		args = json.loads(str(request.data))
 		courseNumber = int(args['courseNumber'])
 		department = args['department']
 		CRN = int(args['CRN'])
