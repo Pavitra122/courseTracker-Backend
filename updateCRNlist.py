@@ -51,8 +51,8 @@ def getCRN(row):
 
 def updateCRN():
 
-	department = 131
-	index = 7436
+	department = 0
+	index = 1
 	while 1:
 
 		try:
@@ -70,31 +70,33 @@ def updateCRN():
 			department_temp = department
 			for deparment in departmentClasses[department_temp:]:
 
-				row = []
-				row.append(deparment['department'])
-				i = 1
+				#if deparment['department'] == 'SOCW':
+					row = []
+					row.append(deparment['department'])
+					i = 1
 
-				while deparment['course'+str(i)] != '' and i < sheet.col_count - 1:
-					row.append(deparment['course'+str(i)])
-					i = i+1
+					while deparment['course'+str(i)] != '' and i < sheet.col_count - 1:
+						row.append(deparment['course'+str(i)])
+						i = i+1
 
-				print (row)
-				rows = getCRN(row)
-				for row in rows:
-					time.sleep(2)  #Limiting to 98.333 requests per second
+					print (row)
+					rows = getCRN(row)
+					for row in rows:
+						time.sleep(2)  #Limiting to 98.333 requests per second
 
-					print (index_temp)
-					if sheet3.cell(index_temp,1).value == '':
-						print ('writing row')
-						#print row
-						#time.sleep(1.5)
-						sheet3.insert_row(row, index_temp)
-						index_temp = index_temp +1
-					else:
-						print ('Not writing row')
-						index_temp = index_temp +1
-				department = department + 1
-				index = index_temp
+						print (index_temp)
+						if sheet3.cell(index_temp,1).value == '':
+							print ('writing row')
+							#print row
+							#time.sleep(1.5)
+							sheet3.insert_row(row, index_temp)
+							index_temp = index_temp +1
+						else:
+							print ('Not writing row')
+							index_temp = index_temp +1
+					department = department + 1
+					index = index_temp
+			break
 		except Exception as e:
 			print (e)
 			print ("Sleeping for 100 seconds")

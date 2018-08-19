@@ -89,6 +89,7 @@ def updateSections():
 						index_temp = index_temp +1
 				department = department + 1
 				index = index_temp
+			break
 		except Exception as e:
 			print (e)
 			print ("Sleeping for 100 seconds")
