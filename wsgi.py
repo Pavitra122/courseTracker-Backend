@@ -122,12 +122,13 @@ def get_course_numbers():
 @application.route('/v1/get_course',methods=['POST'])
 def get_course():
 
-	if request.method == 'POST':
-		args=json.loads(request.data)
-		print (args)
-		crn = args["crn"]
-		#print "CRN",crn
-		try:
+	try:
+			if request.method == 'POST':
+				args=json.loads(request.data)
+				print (args)
+				crn = args["crn"]
+				#print "CRN",crn
+
 			scope = ['https://spreadsheets.google.com/feeds',
 					 'https://www.googleapis.com/auth/drive']
 			creds = ServiceAccountCredentials.from_json_keyfile_name('Project-f939c591cfa1.json', scope)
@@ -142,7 +143,7 @@ def get_course():
 					return jsonify(course)
 
 			return jsonify({'success' : 0 ,'message' : 'CRN not found'})
-		except Exception as e:
+	except Exception as e:
 			print (e)
 			print('Error on line {}'.format(sys.exc_info()[-1].tb_lineno), type(e).__name__, e)
 			scope = ['https://spreadsheets.google.com/feeds',
