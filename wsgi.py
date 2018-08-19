@@ -216,9 +216,16 @@ def add():
 
 	except Exception as e:
 		print (e)
-		print('Error on line {}'.format(sys.exc_info()[-1].tb_lineno), type(e).__name__, e)
-		return jsonify({'success' : 0 ,'message' :e})
 
+
+		print('Error on line {}'.format(sys.exc_info()[-1].tb_lineno), type(e).__name__, e)
+		scope = ['https://spreadsheets.google.com/feeds',
+				 'https://www.googleapis.com/auth/drive']
+		creds = ServiceAccountCredentials.from_json_keyfile_name('Project-f939c591cfa1.json', scope)
+		client = gspread.authorize(creds)
+		print ("Re Authorizing")
+		sheet = client.open("courses").sheet1
+		return jsonify({'success': 0 , 'message' :e})
 
 
 
@@ -252,8 +259,19 @@ def remove():
 		return jsonify({'message': 'Some error occured'})
 
 	except Exception as e :
-		print(e)
+		print (e)
+
+
 		print('Error on line {}'.format(sys.exc_info()[-1].tb_lineno), type(e).__name__, e)
+		scope = ['https://spreadsheets.google.com/feeds',
+				 'https://www.googleapis.com/auth/drive']
+		creds = ServiceAccountCredentials.from_json_keyfile_name('Project-f939c591cfa1.json', scope)
+		client = gspread.authorize(creds)
+		print ("Re Authorizing")
+		sheet = client.open("courses").sheet1
+		return jsonify({'success': 0 , 'message' :e})
+
+
 
 
 
