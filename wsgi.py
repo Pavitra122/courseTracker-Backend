@@ -34,6 +34,10 @@ sheet = client.open("courses").sheet1
 
 def updateLoop():
 
+	global scope
+	global creds
+	global client
+	global sheet
 	flag = 0
 	for j in range(10000):
 		try:
@@ -122,6 +126,10 @@ def get_course_numbers():
 @application.route('/v1/get_course',methods=['POST'])
 def get_course():
 
+	global scope
+	global creds
+	global client
+
 	try:
 			if request.method == 'POST':
 				args=json.loads(request.data.decode('utf-8'))
@@ -129,10 +137,10 @@ def get_course():
 				crn = args["crn"]
 				#print "CRN",crn
 
-			scope = ['https://spreadsheets.google.com/feeds',
-					 'https://www.googleapis.com/auth/drive']
-			creds = ServiceAccountCredentials.from_json_keyfile_name('Project-f939c591cfa1.json', scope)
-			client = gspread.authorize(creds)
+			# scope = ['https://spreadsheets.google.com/feeds',
+			# 		 'https://www.googleapis.com/auth/drive']
+			# creds = ServiceAccountCredentials.from_json_keyfile_name('Project-f939c591cfa1.json', scope)
+			# client = gspread.authorize(creds)
 			depSheet = client.open("Department and courses").get_worksheet(2)
 
 			list = depSheet.col_values(1)
@@ -183,6 +191,10 @@ def resources():
 
 @application.route('/v1/course_track/add', methods=['POST'])
 def add():
+	global scope
+	global creds
+	global client
+	global sheet
 	try:
 		trackedClasses = sheet.get_all_records()
 		print (request.data)
@@ -238,6 +250,11 @@ def add():
 
 @application.route('/v1/course_track/delete', methods=['GET'])
 def remove():
+
+	global scope
+	global creds
+	global client
+	global sheet
 	try:
 		trackedClasses = sheet.get_all_records()
 		if 'courseNumber' in request.args:
