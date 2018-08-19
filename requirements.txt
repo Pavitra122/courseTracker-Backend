@@ -3,3 +3,4 @@ Flask
 gspread
 oauth2client
 bs4
+flask_cors
