@@ -29,7 +29,7 @@ scope = ['https://spreadsheets.google.com/feeds',
 creds = ServiceAccountCredentials.from_json_keyfile_name('Project-f939c591cfa1.json', scope)
 print ("Initializing Credentials")
 client = gspread.authorize(creds)
-print ("Credentials Initializing")
+print ("Credentials Initialized")
 sheet = client.open("courses").sheet1
 
 def updateLoop():
@@ -248,7 +248,7 @@ def add():
 #http://localhost:5000/v1/course_track/delete?department=ECE&courseNumber=120&CRN=65253
 #http://localhost:5000/v1/course_track/delete?department=ECE&courseNumber=120&CRN=64598
 
-@application.route('/v1/course_track/delete', methods=['GET'])
+@application.route('/v1/course_track/delete', methods=['POST'])
 def remove():
 
 	global scope
@@ -257,12 +257,19 @@ def remove():
 	global sheet
 	try:
 		trackedClasses = sheet.get_all_records()
-		if 'courseNumber' in request.args:
-			courseNumber = int(request.args['courseNumber'])
-		if 'department' in request.args:
-			department = request.args['department']
-		if 'CRN' in request.args:
-			CRN = int(request.args['CRN'])
+
+		print (request.data)
+        #print (json.loads(request.content.decode('utf-8')))
+		args = json.loads(request.data.decode('utf-8'))
+		courseNumber = int(args['courseNumber'])
+		department = args['department']
+		CRN = int(args['CRN'])
+		# if 'courseNumber' in request.args:
+		# 	courseNumber = int(request.args['courseNumber'])
+		# if 'department' in request.args:
+		# 	department = request.args['department']
+		# if 'CRN' in request.args:
+		# 	CRN = int(request.args['CRN'])
 
 		for i in range(len(trackedClasses)):
 			if int(trackedClasses[i]['CRN']) == int(CRN):
@@ -272,8 +279,8 @@ def remove():
 					sheet.delete_row(i+2)
 					return jsonify({ 'message' : 'Not tracking class anymore'})
 				sheet.update_cell(i+2,4,trackedClasses[i]['users'] )
-				return jsonify({'message' :  'Decreased number of users, new number = ' +  str(trackedClasses[i]['users'])})
-		return jsonify({'message': 'Some error occured'})
+				return jsonify({'success' : 1 ,'message' :  'Decreased number of users, new number = ' +  str(trackedClasses[i]['users'])})
+		return jsonify({'success' : 0 ,'message': 'Some error occured'})
 
 	except Exception as e :
 		print (e)
